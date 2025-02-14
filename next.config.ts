@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   env: {
-    AIML_KEY: process.env.AIML_KEY,
+    NEXT_PUBLIC_AIML_KEY: process.env.NEXT_PUBLIC_AIML_KEY,
   },
 };
 

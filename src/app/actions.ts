@@ -2,7 +2,7 @@
 
 import { OpenAI } from "openai";
 
-const apiKey = process.env.AIML_KEY!;
+const apiKey = process.env.NEXT_PUBLIC_AIML_KEY!;
 const baseURL = "https://api.aimlapi.com/v1";
 
 const api = new OpenAI({
