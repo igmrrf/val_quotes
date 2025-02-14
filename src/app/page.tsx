@@ -1,21 +1,25 @@
 'use client';
 import { useState } from "react";
+import { generateValentineQuote } from "./actions";
 
 export default function Home() {
   const [name, setName] = useState('');
   const [quote, setQuote] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const generateQuote = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const quotes = [
-      `Dear ${name}, you make my heart skip a beat every time I see you.`,
-      `${name}, being with you makes every day feel like Valentine's Day.`,
-      `My dear ${name}, you're the missing piece to my heart's puzzle.`,
-      `${name}, your love lights up my world like a thousand stars.`,
-      `To ${name}, my heart beats in the rhythm of your name.`
-    ];
-    
-    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    setLoading(true);
+
+    try {
+      const message = await generateValentineQuote(name);
+      setQuote(message);
+    } catch (error) {
+      console.error('Error:', error);
+      setQuote('Failed to generate a quote. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,7 +34,7 @@ export default function Home() {
           </p>
         </div>
 
-        <form onSubmit={generateQuote} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <input
               type="text"
@@ -41,12 +45,13 @@ export default function Home() {
               required
             />
           </div>
-          
+
           <button
             type="submit"
-            className="w-full bg-pink-600 text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors"
+            disabled={loading}
+            className="w-full bg-pink-600 text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors disabled:opacity-50"
           >
-            Generate Quote
+            {loading ? 'Generating...' : 'Generate Quote'}
           </button>
         </form>
 
