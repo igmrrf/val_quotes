@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import { generateValentineQuote } from "./actions";
+import Image from "next/image";
 
 export default function Home() {
   const [name, setName] = useState('');
@@ -63,6 +64,24 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      <footer className="fixed bottom-4 right-4">
+        <a
+          href="https://github.com/igmrrf/val_quotes/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 transition-colors"
+          aria-label="View source on GitHub"
+        >
+          <Image
+            src="/github.svg"
+            alt="GitHub"
+            width={24}
+            height={24}
+            className="dark:invert"
+          />
+        </a>
+      </footer>
     </div>
   );
 }
