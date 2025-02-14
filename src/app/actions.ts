@@ -1,6 +1,7 @@
 'use server';
 
 import { OpenAI } from "openai";
+import { getRandomBackupQuote } from './quotes';
 
 const apiKey = process.env.NEXT_PUBLIC_AIML_KEY!;
 const baseURL = "https://api.aimlapi.com/v1";
@@ -25,12 +26,10 @@ export async function generateValentineQuote(name: string) {
                 },
             ],
         });
-        console.log({ response });
 
-
-        return response.choices[0].message.content || 'Could not generate a quote. Please try again.';
+        return response.choices[0].message.content || getRandomBackupQuote(name);
     } catch (error) {
         console.error('Error generating quote:', error);
-        throw new Error('Failed to generate a quote. Please try again.');
+        return getRandomBackupQuote(name);
     }
 }
